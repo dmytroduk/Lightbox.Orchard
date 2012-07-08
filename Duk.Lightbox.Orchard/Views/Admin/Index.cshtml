@@ -6,7 +6,7 @@
         @Html.ValidationSummary() 
     <fieldset>
         <label for="Theme">@T("Select current theme")</label>
-        @Html.DropDownListFor(m => m.CurrentTheme, new SelectList(Model.AvailableThemes, Model.CurrentTheme))
+        @Html.DropDownListFor(m => m.CurrentThemeName, new SelectList(Model.AvailableThemes, Model.CurrentThemeName))
     </fieldset>
     <fieldset>
         <input type="submit" class="button" value="@T("Apply")" />
