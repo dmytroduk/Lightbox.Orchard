@@ -1,21 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using Orchard.Mvc.Filters;
+﻿using System.Linq;
 using System.Web.Mvc;
+using Duk.Lightbox.Orchard.Services;
+using Orchard.Mvc.Filters;
 using Orchard.UI.Resources;
-using Orchard.Environment.Extensions;
 
 namespace Duk.Lightbox.Orchard.Filters
 {
     public class LightboxFilter : FilterProvider, IResultFilter
     {
-        private readonly IResourceManager _resourceManager;
+        readonly IResourceManager _resourceManager;
+        readonly ILightboxService _lightboxService;
 
-        public LightboxFilter(IResourceManager resourceManager)
+        public LightboxFilter(IResourceManager resourceManager, ILightboxService lightboxService)
         {
             _resourceManager = resourceManager;
+            _lightboxService = lightboxService;
         }
 
         public void OnResultExecuting(ResultExecutingContext filterContext)
@@ -26,7 +25,11 @@ namespace Duk.Lightbox.Orchard.Filters
                 return;
             }
 
-            _resourceManager.Require("stylesheet", ResourceManifest.ColorBoxLightTheme).AtHead();
+            var currentTheme = _lightboxService.GetCurrentTheme();
+            if (currentTheme != null)
+            {
+                currentTheme.CssResources.Keys.ToList().ForEach(name => _resourceManager.Require("stylesheet", name).AtHead());
+            }            
 
             _resourceManager.Require("script", "jQuery").AtHead();
             _resourceManager.Require("script", ResourceManifest.ColorBoxScriptID).AtHead();

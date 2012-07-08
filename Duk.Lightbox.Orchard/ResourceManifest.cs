@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using Duk.Lightbox.Orchard.Services;
 using Orchard.UI.Resources;
 
 namespace Duk.Lightbox.Orchard
@@ -11,8 +12,12 @@ namespace Duk.Lightbox.Orchard
         public const string ColorBoxScriptID = "LightBox_ColorBox";
         public const string LightboxLoaderScriptID = "LightBox_Loader";
 
-        public const string ColorBoxLightTheme = "LightBox_ColorBox_Light";
-        public const string ColorBoxDarkTheme = "LightBox_ColorBox_Dark";
+        readonly ILightboxService _lightboxService;
+
+        public ResourceManifest(ILightboxService lightboxService)
+        {
+            _lightboxService = lightboxService;
+        }
 
         public void BuildManifests(ResourceManifestBuilder builder)
         {
@@ -20,8 +25,8 @@ namespace Duk.Lightbox.Orchard
 
             manifest.DefineScript(ColorBoxScriptID).SetUrl("colorbox/jquery.colorbox-min.js", "colorbox/jquery.colorbox.js").SetVersion("1.3.19");
 
-            manifest.DefineStyle(ColorBoxLightTheme).SetUrl("themes/light/colorbox.css").SetVersion("1.8.18");
-            manifest.DefineStyle(ColorBoxDarkTheme).SetUrl("themes/dark/colorbox.css").SetVersion("1.8.18");
+            var themeResources = _lightboxService.GetAvailableThemes().SelectMany(t => t.CssResources).ToList();
+            themeResources.ForEach(resource => manifest.DefineStyle(resource.Key).SetUrl(resource.Value));
 
             manifest.DefineScript(LightboxLoaderScriptID).SetUrl("loader.js").SetVersion("1.0.0");
         }

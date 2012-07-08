@@ -1,1 +1,15 @@
-﻿<h2>Lightbox Settings</h2>
+﻿@model Duk.Lightbox.Orchard.Models.ThemeViewModel
+<h2>Select Lightbox theme</h2>
+
+@using (Html.BeginForm("SetCurrentTheme", "Admin", FormMethod.Post, new { area = "Duk.Lightbox.Orchard" }))
+{
+        @Html.ValidationSummary() 
+    <fieldset>
+        <label for="Theme">@T("Select current theme")</label>
+        @Html.DropDownListFor(m => m.CurrentTheme, new SelectList(Model.AvailableThemes, Model.CurrentTheme))
+    </fieldset>
+    <fieldset>
+        <input type="submit" class="button" value="@T("Apply")" />
+        @Html.AntiForgeryTokenOrchard()
+    </fieldset>
+}

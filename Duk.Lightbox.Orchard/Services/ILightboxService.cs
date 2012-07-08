@@ -1,13 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
+using Orchard;
 
 namespace Duk.Lightbox.Orchard.Services
 {
-    public interface ILightboxService
+    public interface ILightboxService : IDependency
     {
-        string GetCurrentTheme();
+        IEnumerable<LightboxTheme> GetAvailableThemes();
+
+        LightboxTheme GetCurrentTheme();
 
         void SetCurrentTheme(string theme);
     }

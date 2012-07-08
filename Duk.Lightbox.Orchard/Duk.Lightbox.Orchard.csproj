@@ -105,15 +105,15 @@
     <Compile Include="Controllers\AdminController.cs" />
     <Compile Include="Filters\LightboxFilter.cs" />
     <Compile Include="Migrations.cs" />
+    <Compile Include="Models\ThemeViewModel.cs" />
     <Compile Include="Records\SettingsRecord.cs" />
     <Compile Include="ResourceManifest.cs" />
     <Compile Include="Routes.cs" />
     <Compile Include="Services\ILightboxService.cs" />
     <Compile Include="Services\LightboxService.cs" />
+    <Compile Include="Services\LightboxTheme.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Models\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Content Include="Views\Admin\Index.cshtml" />
   </ItemGroup>
