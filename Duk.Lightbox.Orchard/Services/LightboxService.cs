@@ -3,6 +3,7 @@ using System.Linq;
 using Duk.Lightbox.Orchard.Records;
 using Orchard;
 using Orchard.Data;
+using System;
 
 namespace Duk.Lightbox.Orchard.Services
 {
@@ -19,10 +20,10 @@ namespace Duk.Lightbox.Orchard.Services
         {
             return new[] 
             { 
-                new LightboxTheme {Name = "light", CssResources = new Dictionary<string, string> {
+                new LightboxTheme {Name = "Light", CssResources = new Dictionary<string, string> {
                     {"lightStyles", "themes/light/colorbox.css"}
                 }},
-                    new LightboxTheme {Name = "dark", CssResources = new Dictionary<string, string> {
+                    new LightboxTheme {Name = "Dark", CssResources = new Dictionary<string, string> {
                     {"darkStyles", "themes/dark/colorbox.css"}
                 }}
             };
@@ -31,13 +32,20 @@ namespace Duk.Lightbox.Orchard.Services
         public LightboxTheme GetCurrentTheme()
         {
             var settings = _settingsRepository.Table.SingleOrDefault();
-            if (settings == null || string.IsNullOrEmpty(settings.CurrentThemeName))
+            var availableTheme = GetAvailableThemes();
+            LightboxTheme currentTheme = null;
+            if (settings != null || !String.IsNullOrEmpty(settings.CurrentThemeName))
             {
-                return GetAvailableThemes().FirstOrDefault(); 
+                currentTheme = availableTheme.FirstOrDefault(t => 
+                    t.Name.Equals(settings.CurrentThemeName, System.StringComparison.OrdinalIgnoreCase));                
             }
-            
-            return GetAvailableThemes().FirstOrDefault(t => 
-                t.Name.Equals(settings.CurrentThemeName, System.StringComparison.OrdinalIgnoreCase));
+
+            if (currentTheme == null)
+            {
+                currentTheme = GetAvailableThemes().FirstOrDefault(); 
+            }
+
+            return currentTheme;
         }
 
         public void SetCurrentTheme(string theme)

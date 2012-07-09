@@ -65,6 +65,8 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\TestImage.jpg" />
+    <Content Include="Content\TestImage_thumb.jpg" />
     <Content Include="Scripts\colorbox\jquery.colorbox-min.js" />
     <Content Include="Scripts\colorbox\jquery.colorbox.js" />
     <Content Include="Scripts\loader.js" />
@@ -113,7 +115,9 @@
     <Compile Include="Services\LightboxService.cs" />
     <Compile Include="Services\LightboxTheme.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Content Include="Content\Web.config" />
+  </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Admin\Index.cshtml" />
   </ItemGroup>

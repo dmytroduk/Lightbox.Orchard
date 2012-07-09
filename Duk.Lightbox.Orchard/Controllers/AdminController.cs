@@ -5,6 +5,7 @@ using Duk.Lightbox.Orchard.Services;
 using Orchard;
 using Orchard.Security;
 using Orchard.Themes;
+using System;
 
 namespace Duk.Lightbox.Orchard.Controllers
 {
@@ -19,30 +20,39 @@ namespace Duk.Lightbox.Orchard.Controllers
             _lightboxService = lightboxService;
         }
 
-        public ActionResult Index()
-        {
+        public ActionResult Index(string currentThemeName)
+        {            
+            var availableThemes = _lightboxService.GetAvailableThemes();
+            var currentTheme = _lightboxService.GetCurrentTheme();
+
             var model = new ThemeViewModel();
-            model.CurrentThemeName = _lightboxService.GetCurrentTheme().Name;
-            model.AvailableThemes = _lightboxService.GetAvailableThemes().Select(t => t.Name).ToList();
-            return View(model);
+            model.CurrentThemeName = !String.IsNullOrWhiteSpace(currentThemeName) && 
+                availableThemes.Any(t => t.Name.Equals(currentThemeName, StringComparison.OrdinalIgnoreCase)) ? 
+                    currentThemeName : currentTheme.Name;
+            model.IsPreview = !model.CurrentThemeName.Equals(currentTheme.Name, StringComparison.OrdinalIgnoreCase);
+            model.AvailableThemes = availableThemes.Select(t => t.Name).ToList();
+            model.TestImagePath = "/Modules/Duk.Lightbox.Orchard/Content/TestImage.jpg";
+            model.TestImageThumbnailPath = "/Modules/Duk.Lightbox.Orchard/Content/TestImage_thumb.jpg";
+
+            return View("Index", model);
         }
 
         [HttpPost]
-        public ActionResult SetCurrentTheme(string currentThemeName)
+        public ActionResult Index(string currentThemeName, bool isPreview)
         {
             if (!_orchardServices.Authorizer.Authorize(StandardPermissions.SiteOwner))
             {
                 return new HttpUnauthorizedResult();
             }
 
-            if (!ModelState.IsValid)
+            if (isPreview || !ModelState.IsValid)
             {
-                return Index();
+                return Index(currentThemeName);
             }
 
             _lightboxService.SetCurrentTheme(currentThemeName);
 
-            return RedirectToAction("Index");
+            return Index(null);
         }
     }
 }

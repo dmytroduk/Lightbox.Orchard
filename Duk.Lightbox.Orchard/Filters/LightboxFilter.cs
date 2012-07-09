@@ -1,8 +1,11 @@
 ﻿using System.Linq;
 using System.Web.Mvc;
 using Duk.Lightbox.Orchard.Services;
+using Duk.Lightbox.Orchard.Controllers;
 using Orchard.Mvc.Filters;
 using Orchard.UI.Resources;
+using System;
+using Duk.Lightbox.Orchard.Models;
 
 namespace Duk.Lightbox.Orchard.Filters
 {
@@ -25,7 +28,22 @@ namespace Duk.Lightbox.Orchard.Filters
                 return;
             }
 
-            var currentTheme = _lightboxService.GetCurrentTheme();
+            LightboxTheme currentTheme = null;
+            if (filterContext.Controller is AdminController)
+            {
+                var previewTheme = viewResult.Model as ThemeViewModel;
+                if (previewTheme != null && !String.IsNullOrWhiteSpace(previewTheme.CurrentThemeName))
+                {
+                    currentTheme = _lightboxService.GetAvailableThemes()
+                        .FirstOrDefault(t => t.Name.Equals(previewTheme.CurrentThemeName, StringComparison.OrdinalIgnoreCase));
+                }
+            }
+
+            if (currentTheme == null)
+            {
+                currentTheme = _lightboxService.GetCurrentTheme();            
+            }
+
             if (currentTheme != null)
             {
                 currentTheme.CssResources.Keys.ToList().ForEach(name => _resourceManager.Require("stylesheet", name).AtHead());

@@ -10,7 +10,25 @@ namespace Duk.Lightbox.Orchard.Models
             set;
         }
 
+        public bool IsPreview
+        {
+            get;
+            set;
+        }
+
         public IList<string> AvailableThemes
+        {
+            get;
+            set;
+        }
+
+        public string TestImagePath
+        {
+            get;
+            set;
+        }
+
+        public string TestImageThumbnailPath
         {
             get;
             set;
