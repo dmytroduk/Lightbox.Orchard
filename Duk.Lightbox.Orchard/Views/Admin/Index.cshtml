@@ -1,6 +1,4 @@
 ﻿@model Duk.Lightbox.Orchard.Models.ThemeViewModel
-<h2>Select Lightbox theme</h2>
-
 @using (Html.BeginForm("Index", "Admin", FormMethod.Post, new { area = "Duk.Lightbox.Orchard", id = "themeForm" }))
 {
         @Html.ValidationSummary() 
@@ -13,7 +11,10 @@
         <p><a id="testImageLink" href="@Model.TestImagePath" target="_blank"><img src="@Model.TestImageThumbnailPath" alt="Click on image to preview selected theme" /></a></p>        
     </fieldset>
     <fieldset>
+    @if(Model.IsPreview) 
+    {
         <input type="submit" class="button" id="submitButton" value="@T("Save")" />
+    }
         @Html.Hidden("isPreview", Model.IsPreview)
         @Html.AntiForgeryTokenOrchard()
     </fieldset>
