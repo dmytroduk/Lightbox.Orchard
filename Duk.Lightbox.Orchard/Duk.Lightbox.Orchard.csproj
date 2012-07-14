@@ -76,6 +76,7 @@
     <Content Include="Styles\themes\light\colorbox.css" />
     <Content Include="Styles\themes\light\images\border1.png" />
     <Content Include="Styles\themes\light\images\border2.png" />
+    <Content Include="Styles\themes\light\images\controls.png" />
     <Content Include="Styles\themes\light\images\ie6\borderBottomCenter.png" />
     <Content Include="Styles\themes\light\images\ie6\borderBottomLeft.png" />
     <Content Include="Styles\themes\light\images\ie6\borderBottomRight.png" />
