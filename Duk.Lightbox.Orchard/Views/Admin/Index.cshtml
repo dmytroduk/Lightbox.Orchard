@@ -15,6 +15,10 @@
     {
         <input type="submit" class="button" id="submitButton" value="@T("Save")" />
     }
+    else
+    {
+        <p>This is your current theme.</p>
+    }
         @Html.Hidden("isPreview", Model.IsPreview)
         @Html.AntiForgeryTokenOrchard()
     </fieldset>

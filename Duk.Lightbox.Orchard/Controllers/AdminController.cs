@@ -6,6 +6,9 @@ using Orchard;
 using Orchard.Security;
 using Orchard.Themes;
 using System;
+using Orchard.Environment.Extensions;
+using System.Web;
+using Orchard.Environment.Extensions.Models;
 
 namespace Duk.Lightbox.Orchard.Controllers
 {
@@ -13,10 +16,15 @@ namespace Duk.Lightbox.Orchard.Controllers
     {
         IOrchardServices _orchardServices;
         ILightboxService _lightboxService;
+        string _modulePath;
 
-        public AdminController(IOrchardServices orchardServices, ILightboxService lightboxService)
+        public AdminController(IOrchardServices orchardServices, IExtensionManager extensionManager, ILightboxService lightboxService)
         {
             _orchardServices = orchardServices;
+            var moduleDescriptor = extensionManager.GetExtension("Duk.Lightbox.Orchard");
+            _modulePath = VirtualPathUtility.AppendTrailingSlash(VirtualPathUtility.Combine(
+                VirtualPathUtility.AppendTrailingSlash(VirtualPathUtility.ToAbsolute(moduleDescriptor.Location)), 
+                moduleDescriptor.Path));
             _lightboxService = lightboxService;
         }
 
@@ -31,8 +39,8 @@ namespace Duk.Lightbox.Orchard.Controllers
                     currentThemeName : currentTheme.Name;
             model.IsPreview = !model.CurrentThemeName.Equals(currentTheme.Name, StringComparison.OrdinalIgnoreCase);
             model.AvailableThemes = availableThemes.Select(t => t.Name).ToList();
-            model.TestImagePath = "/Modules/Duk.Lightbox.Orchard/Content/TestImage.jpg";
-            model.TestImageThumbnailPath = "/Modules/Duk.Lightbox.Orchard/Content/TestImage_thumb.jpg";
+            model.TestImagePath = VirtualPathUtility.Combine(_modulePath, "Content/TestImage.jpg");
+            model.TestImageThumbnailPath = VirtualPathUtility.Combine(_modulePath, "Content/TestImage_thumb.jpg");
 
             return View("Index", model);
         }
