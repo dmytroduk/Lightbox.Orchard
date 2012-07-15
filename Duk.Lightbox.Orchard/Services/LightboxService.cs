@@ -20,11 +20,17 @@ namespace Duk.Lightbox.Orchard.Services
         {
             return new[] 
             { 
-                new LightboxTheme {Name = "Light", CssResources = new Dictionary<string, string> {
-                    {"lightStyles", "themes/light/colorbox.css"}
+                new LightboxTheme {Name = "Light with controls in the top", CssResources = new Dictionary<string, string> {
+                    {"lightTopStyles", "themes/LightTop/colorbox.css"}
                 }},
-                    new LightboxTheme {Name = "Dark", CssResources = new Dictionary<string, string> {
-                    {"darkStyles", "themes/dark/colorbox.css"}
+                new LightboxTheme {Name = "Light with controls in the bottom", CssResources = new Dictionary<string, string> {
+                    {"lightBottomStyles", "themes/LightBottom/colorbox.css"}
+                }},
+                new LightboxTheme {Name = "Dark with inline controls", CssResources = new Dictionary<string, string> {
+                    {"darkInlineStyles", "themes/DarkInline/colorbox.css"}
+                }},
+                    new LightboxTheme {Name = "Dark with controls in the bottom", CssResources = new Dictionary<string, string> {
+                    {"darkBottomStyles", "themes/DarkBottom/colorbox.css"}
                 }}
             };
         }
