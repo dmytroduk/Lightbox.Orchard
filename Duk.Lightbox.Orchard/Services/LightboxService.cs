@@ -1,15 +1,14 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Duk.Lightbox.Orchard.Records;
-using Orchard;
 using Orchard.Data;
-using System;
 
 namespace Duk.Lightbox.Orchard.Services
 {
-    public class LightboxService : ILightboxService, IDependency
+    public class LightboxService : ILightboxService
     {
-        IRepository<SettingsRecord> _settingsRepository;
+        readonly IRepository<SettingsRecord> _settingsRepository;
 
         public LightboxService(IRepository<SettingsRecord> settingsRepository)
         {
@@ -40,18 +39,13 @@ namespace Duk.Lightbox.Orchard.Services
             var settings = _settingsRepository.Table.SingleOrDefault();
             var availableTheme = GetAvailableThemes();
             LightboxTheme currentTheme = null;
-            if (settings != null || !String.IsNullOrEmpty(settings.CurrentThemeName))
+            if (settings != null &&  !String.IsNullOrEmpty(settings.CurrentThemeName))
             {
                 currentTheme = availableTheme.FirstOrDefault(t => 
-                    t.Name.Equals(settings.CurrentThemeName, System.StringComparison.OrdinalIgnoreCase));                
+                    t.Name.Equals(settings.CurrentThemeName, StringComparison.OrdinalIgnoreCase));                
             }
 
-            if (currentTheme == null)
-            {
-                currentTheme = GetAvailableThemes().FirstOrDefault(); 
-            }
-
-            return currentTheme;
+            return currentTheme ?? GetAvailableThemes().FirstOrDefault();
         }
 
         public void SetCurrentTheme(string theme)

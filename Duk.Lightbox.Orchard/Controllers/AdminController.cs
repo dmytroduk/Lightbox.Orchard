@@ -4,19 +4,17 @@ using Duk.Lightbox.Orchard.Models;
 using Duk.Lightbox.Orchard.Services;
 using Orchard;
 using Orchard.Security;
-using Orchard.Themes;
 using System;
 using Orchard.Environment.Extensions;
 using System.Web;
-using Orchard.Environment.Extensions.Models;
 
 namespace Duk.Lightbox.Orchard.Controllers
 {
     public class AdminController : Controller
     {
-        IOrchardServices _orchardServices;
-        ILightboxService _lightboxService;
-        string _modulePath;
+        readonly IOrchardServices _orchardServices;
+        readonly ILightboxService _lightboxService;
+        readonly string _modulePath;
 
         public AdminController(IOrchardServices orchardServices, IExtensionManager extensionManager, ILightboxService lightboxService)
         {
@@ -30,13 +28,19 @@ namespace Duk.Lightbox.Orchard.Controllers
 
         public ActionResult Index(string currentThemeName)
         {            
-            var availableThemes = _lightboxService.GetAvailableThemes();
+            var availableThemes = _lightboxService.GetAvailableThemes().ToList();
             var currentTheme = _lightboxService.GetCurrentTheme();
 
-            var model = new ThemeViewModel();
-            model.CurrentThemeName = !String.IsNullOrWhiteSpace(currentThemeName) && 
-                availableThemes.Any(t => t.Name.Equals(currentThemeName, StringComparison.OrdinalIgnoreCase)) ? 
-                    currentThemeName : currentTheme.Name;
+            var model = new ThemeViewModel
+            {
+                CurrentThemeName = !String.IsNullOrWhiteSpace(currentThemeName) &&
+                                   availableThemes.Any(
+                                       t =>
+                                       t.Name.Equals(currentThemeName,
+                                                     StringComparison.OrdinalIgnoreCase))
+                                    ? currentThemeName
+                                    : currentTheme.Name
+            };
             model.IsPreview = !model.CurrentThemeName.Equals(currentTheme.Name, StringComparison.OrdinalIgnoreCase);
             model.AvailableThemes = availableThemes.Select(t => t.Name).ToList();
             model.TestImagePath = VirtualPathUtility.Combine(_modulePath, "Content/TestImage.jpg");

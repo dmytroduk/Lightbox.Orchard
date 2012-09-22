@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Duk.Lightbox.Orchard.Records
+﻿namespace Duk.Lightbox.Orchard.Records
 {
     public class SettingsRecord
     {
