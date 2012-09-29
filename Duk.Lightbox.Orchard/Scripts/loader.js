@@ -2,13 +2,11 @@
 
 $(function () {
     $("#content").find("img").each(function () {
-        //read the parent
-        var parentLinkObject = $(this).parent().first();
-        if (parentLinkObject.is("a")) {
-            //read the attribute 'href'
-            hrefAttribute = $(parentLinkObject).attr("href");
-            //look for graphical file types            
-            $(parentLinkObject).colorbox();
+        var parentLink = $(this).parent().first();
+        if (parentLink.is("a")) {
+            var href = $(parentLink).attr("href");
+            // check that this is link to image
+            $(parentLink).colorbox();
         }
     });
 });
