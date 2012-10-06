@@ -8,7 +8,6 @@ namespace Duk.Lightbox.Orchard
     {
         public const string ColorBoxScriptId = "LightBox_ColorBox";
         public const string UriJsId = "uri.js";
-        public const string UriJsPluginId = "jquery.uri.js";
         public const string LightboxLoaderScriptId = "LightBox_Loader";
 
         readonly ILightboxService _lightboxService;
@@ -28,7 +27,6 @@ namespace Duk.Lightbox.Orchard
             themeResources.ForEach(resource => manifest.DefineStyle(resource.Key).SetUrl(resource.Value));
 
             manifest.DefineScript(UriJsId).SetUrl("uri/URI.min.js");
-            manifest.DefineScript(UriJsPluginId).SetUrl("uri/jquery.URI.min.js");
 
             manifest.DefineScript(LightboxLoaderScriptId).SetUrl("loader.js").SetVersion("1.0.0");
         }

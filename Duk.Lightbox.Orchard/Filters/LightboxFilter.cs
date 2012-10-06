@@ -50,10 +50,9 @@ namespace Duk.Lightbox.Orchard.Filters
             }            
 
             _resourceManager.Require("script", "jQuery").AtHead();
-            _resourceManager.Require("script", ResourceManifest.ColorBoxScriptId).AtHead();
-            _resourceManager.Require("script", ResourceManifest.LightboxLoaderScriptId).AtHead();
-            _resourceManager.Require("script", ResourceManifest.UriJsId).AtHead();
-            _resourceManager.Require("script", ResourceManifest.UriJsPluginId).AtHead(); 
+            _resourceManager.Require("script", ResourceManifest.ColorBoxScriptId).AtFoot();
+            _resourceManager.Require("script", ResourceManifest.UriJsId).AtFoot();
+            _resourceManager.Require("script", ResourceManifest.LightboxLoaderScriptId).AtFoot();
         }
 
         public void OnResultExecuted(ResultExecutedContext filterContext)

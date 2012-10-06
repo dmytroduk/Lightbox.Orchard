@@ -69,8 +69,8 @@
     <Content Include="Content\TestImage_thumb.jpg" />
     <Content Include="Scripts\colorbox\jquery.colorbox-min.js" />
     <Content Include="Scripts\colorbox\jquery.colorbox.js" />
+    <Content Include="Scripts\_references.js" />
     <Content Include="Scripts\loader.js" />
-    <Content Include="Scripts\uri\jquery.URI.min.js" />
     <Content Include="Scripts\uri\URI.min.js" />
     <Content Include="Styles\themes\DarkBottom\colorbox.css" />
     <Content Include="Styles\themes\DarkBottom\images\border.png" />
