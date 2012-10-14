@@ -26,31 +26,42 @@ namespace Duk.Lightbox.Orchard.Controllers
             _lightboxService = lightboxService;
         }
 
-        public ActionResult Index(string currentThemeName)
+        public ActionResult Index()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult Index(bool enable)
+        {
+            return View();
+        }
+
+        public ActionResult Theme(string selectedTheme)
         {            
             var availableThemes = _lightboxService.GetAvailableThemes().ToList();
             var currentTheme = _lightboxService.GetCurrentTheme();
 
             var model = new ThemeViewModel
             {
-                CurrentThemeName = !String.IsNullOrWhiteSpace(currentThemeName) &&
+                CurrentTheme = !String.IsNullOrWhiteSpace(selectedTheme) &&
                                    availableThemes.Any(
                                        t =>
-                                       t.Name.Equals(currentThemeName,
+                                       t.Name.Equals(selectedTheme,
                                                      StringComparison.OrdinalIgnoreCase))
-                                    ? currentThemeName
+                                    ? selectedTheme
                                     : currentTheme.Name
             };
-            model.IsPreview = !model.CurrentThemeName.Equals(currentTheme.Name, StringComparison.OrdinalIgnoreCase);
+            model.IsPreview = !model.CurrentTheme.Equals(currentTheme.Name, StringComparison.OrdinalIgnoreCase);
             model.AvailableThemes = availableThemes.Select(t => t.Name).ToList();
             model.TestImagePath = VirtualPathUtility.Combine(_modulePath, "Content/TestImage.jpg");
             model.TestImageThumbnailPath = VirtualPathUtility.Combine(_modulePath, "Content/TestImage_thumb.jpg");
 
-            return View("Index", model);
+            return View("Theme", model);
         }
 
         [HttpPost]
-        public ActionResult Index(string currentThemeName, bool isPreview)
+        public ActionResult Theme(string currentTheme, bool isPreview)
         {
             if (!_orchardServices.Authorizer.Authorize(StandardPermissions.SiteOwner))
             {
@@ -59,12 +70,12 @@ namespace Duk.Lightbox.Orchard.Controllers
 
             if (isPreview || !ModelState.IsValid)
             {
-                return Index(currentThemeName);
+                return Theme(currentTheme);
             }
 
-            _lightboxService.SetCurrentTheme(currentThemeName);
+            _lightboxService.SetCurrentTheme(currentTheme);
 
-            return Index(null);
+            return Theme(null);
         }
     }
 }

@@ -4,7 +4,7 @@ namespace Duk.Lightbox.Orchard.Models
 {
     public class ThemeViewModel
     {
-        public string CurrentThemeName
+        public string CurrentTheme
         {
             get;
             set;

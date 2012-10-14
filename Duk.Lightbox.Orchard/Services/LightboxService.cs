@@ -39,10 +39,10 @@ namespace Duk.Lightbox.Orchard.Services
             var settings = _settingsRepository.Table.SingleOrDefault();
             var availableTheme = GetAvailableThemes();
             LightboxTheme currentTheme = null;
-            if (settings != null &&  !String.IsNullOrEmpty(settings.CurrentThemeName))
+            if (settings != null &&  !String.IsNullOrEmpty(settings.CurrentTheme))
             {
                 currentTheme = availableTheme.FirstOrDefault(t => 
-                    t.Name.Equals(settings.CurrentThemeName, StringComparison.OrdinalIgnoreCase));                
+                    t.Name.Equals(settings.CurrentTheme, StringComparison.OrdinalIgnoreCase));                
             }
 
             return currentTheme ?? GetAvailableThemes().FirstOrDefault();
@@ -57,7 +57,31 @@ namespace Duk.Lightbox.Orchard.Services
                 _settingsRepository.Create(settings);
             }
 
-            settings.CurrentThemeName = theme;
+            settings.CurrentTheme = theme;
+        }
+
+
+        public LightboxSettings GetSettings()
+        {
+            throw new NotImplementedException();
+        }
+
+        public LightboxSettings GetDefaultSettings()
+        {
+            return new LightboxSettings
+                       {
+                           Enabled = true,
+                           ContainerSelector = "#content",
+                           ImageChildTagRequired = false,
+                           LinkToImageRequired = true,
+                           ImageFileExtensions = null,
+                           CurrentTheme = null
+                       };
+        }
+
+        public void SaveSettings(LightboxSettings settings)
+        {
+            throw new NotImplementedException();
         }
     }
 }

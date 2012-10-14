@@ -1,9 +1,8 @@
-﻿namespace Duk.Lightbox.Orchard.Records
+﻿
+namespace Duk.Lightbox.Orchard.Services
 {
-    public class SettingsRecord
+    public class LightboxSettings
     {
-        public virtual int Id { get; set; }
-
         public virtual bool Enabled { get; set; }
 
         public virtual string ContainerSelector { get; set; }

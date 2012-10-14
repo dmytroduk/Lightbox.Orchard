@@ -1,0 +1,44 @@
+﻿@model Duk.Lightbox.Orchard.Models.ThemeViewModel
+@using (Html.BeginForm("Theme", "Admin", FormMethod.Post, new { area = "Duk.Lightbox.Orchard", id = "themeForm" }))
+{
+        @Html.ValidationSummary() 
+    <fieldset>
+        <label for="currentTheme">@T("Select Lightbox theme")</label>
+        @Html.DropDownListFor(m => m.CurrentTheme, new SelectList(Model.AvailableThemes, Model.CurrentTheme))
+    </fieldset>
+    <fieldset>
+        <p>Click on image to preview selected Lightbox theme:</p>
+        <p><a id="testImageLink" href="@Model.TestImagePath" target="_blank"><img src="@Model.TestImageThumbnailPath" alt="Click on image to preview selected theme" /></a></p>        
+    </fieldset>
+    <fieldset>
+    @if(Model.IsPreview) 
+    {
+        <input type="submit" class="button" id="submitButton" value="@T("Save")" />
+    }
+    else
+    {
+        <p>This is your current theme.</p>
+    }
+        @Html.Hidden("isPreview", Model.IsPreview)
+        @Html.AntiForgeryTokenOrchard()
+    </fieldset>
+}
+
+<script type="text/javascript">
+    $(function () {
+        $("#testImageLink").colorbox();
+    });
+    $(function () {
+        $("#CurrentTheme").change(function () {
+            $("#isPreview").val("true");
+            $("#themeForm").submit();
+        });
+    });
+    $(function () {
+        $("#submitButton").click(function () {
+            $("#isPreview").val("false");
+            return true;
+        });
+    });
+
+</script>

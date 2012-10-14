@@ -1,44 +1,44 @@
-﻿@model Duk.Lightbox.Orchard.Models.ThemeViewModel
-@using (Html.BeginForm("Index", "Admin", FormMethod.Post, new { area = "Duk.Lightbox.Orchard", id = "themeForm" }))
+﻿@model Duk.Lightbox.Orchard.Models.SettingsViewModel
+@using (Html.BeginForm("Index", "Admin", FormMethod.Post, new { area = "Duk.Lightbox.Orchard", id = "settingsForm" }))
 {
         @Html.ValidationSummary() 
     <fieldset>
-        <label for="currentThemeName">@T("Select Lightbox theme")</label>
-        @Html.DropDownListFor(m => m.CurrentThemeName, new SelectList(Model.AvailableThemes, Model.CurrentThemeName))
+        <label for="enabled">@T("Enable Lightbox")</label>
+        @Html.CheckBoxFor(m => m.Enabled)
     </fieldset>
     <fieldset>
-        <p>Click on image to preview selected Lightbox theme:</p>
-        <p><a id="testImageLink" href="@Model.TestImagePath" target="_blank"><img src="@Model.TestImageThumbnailPath" alt="Click on image to preview selected theme" /></a></p>        
+        <label for="containerSelector">@T("Container selector")</label>
+        @Html.TextBoxFor(m => m.ContainerSelector, new { @class = "textMedium" })
+        <div class="hint"><p>jQuery selector to indentify containers where Lightbox should be enabled. Examples:</p>
+            <ul>
+                <li><code>#content</code> means that Lightbox should be enabled for links inside element that has ID = content.</li>
+                <li><code>#content, .sidebar</code> means that Lightbox should be enabled ofr links inside element with ID <code>content</code> and element with class <code>sidebar</code>.</li>
+                <li>Content selector <code>*</code> enables Lightbox for all links on the page.</li>
+            </ul>
+        </div>
     </fieldset>
     <fieldset>
-    @if(Model.IsPreview) 
-    {
+        <label for="imageChildTagRequired">@T("Link must have child image tag")</label>
+        @Html.CheckBoxFor(m => m.ImageChildTagRequired)
+        <div class="hint"><p>Enables Lightbox only for those links that have image child. If this oprion is set:</p>
+            <ul>
+                <li>Lightbox is enabled for links like this: <code>&lt;a href=&quot;image.png&quot;&gt;&lt;img src=&quot;image_thumb.png&quot; /&gt;&lt;/a&gt;</code></li>
+                <li>Lightbox is disabled for links like this: <code>&lt;a href=&quot;image.png&quot;&gt;Link to image&lt;/a&gt;</code>
+            </ul>
+        </div>
+    </fieldset>
+    <fieldset>
+        <label for="linkToImageRequired">@T("Link must refer image")</label>
+        @Html.CheckBoxFor(m => m.LinkToImageRequired)
+        <div class="hint"><p>Enables Lightbox only links that refers graphical files with defined extensions.</p></div>
+    </fieldset>
+    <fieldset>
+        <label for="imageFileExtensions">@T("Image file extensions")</label>
+        @Html.TextAreaFor(m => m.ImageFileExtensions, 8, 10, null)
+        <div class="hint"><p>The list of image file extensions that lightbox should be enabled for.</p></div>
+    </fieldset>
+    
+    @Html.AntiForgeryTokenOrchard()
+    
         <input type="submit" class="button" id="submitButton" value="@T("Save")" />
-    }
-    else
-    {
-        <p>This is your current theme.</p>
-    }
-        @Html.Hidden("isPreview", Model.IsPreview)
-        @Html.AntiForgeryTokenOrchard()
-    </fieldset>
 }
-
-<script type="text/javascript">
-    $(function () {
-        $("#testImageLink").colorbox();
-    });
-    $(function () {
-        $("#CurrentThemeName").change(function () {
-            $("#isPreview").val("true");
-            $("#themeForm").submit();
-        });
-    });
-    $(function () {
-        $("#submitButton").click(function () {
-            $("#isPreview").val("false");
-            return true;
-        });
-    });
-
-</script>

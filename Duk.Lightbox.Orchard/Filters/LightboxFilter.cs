@@ -32,10 +32,10 @@ namespace Duk.Lightbox.Orchard.Filters
             if (filterContext.Controller is AdminController)
             {
                 var previewTheme = viewResult.Model as ThemeViewModel;
-                if (previewTheme != null && !String.IsNullOrWhiteSpace(previewTheme.CurrentThemeName))
+                if (previewTheme != null && !String.IsNullOrWhiteSpace(previewTheme.CurrentTheme))
                 {
                     currentTheme = _lightboxService.GetAvailableThemes()
-                        .FirstOrDefault(t => t.Name.Equals(previewTheme.CurrentThemeName, StringComparison.OrdinalIgnoreCase));
+                        .FirstOrDefault(t => t.Name.Equals(previewTheme.CurrentTheme, StringComparison.OrdinalIgnoreCase));
                 }
             }
 
