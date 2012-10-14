@@ -8,19 +8,18 @@
     var processLinksToImageOnly = true;
 
     $(containerQuery).find("a").each(function(index, link) {
+        var linkUrl = $(link).attr("href");
+        if (!linkUrl || linkUrl.length < 1 || linkUrl[0] === "#") {
+            return;
+        }
         var processLink = true;
-        var uri = new URI($(link).attr("href"));
+        var uri = new URI(linkUrl);
         if (processLinksWithImageInsideOnly) {
             processLink &= $(link).children("img").length == 1;
         }
         if (processLink && processLinksToImageOnly) {
-            var isLinkToImage = false;
-            var i = 0;
-            while (!isLinkToImage && i < imageExtensions.length) {
-                isLinkToImage |= $.inArray(uri.suffix(), imageExtensions) >= 0;
-                i++;
-            }
-            processLink &= isLinkToImage;
+            var suffix = uri.suffix();
+            processLink &= suffix && suffix.length > 0 && $.inArray(suffix, imageExtensions) >= 0;
         }
         if (processLink) {
             $(link).colorbox();
