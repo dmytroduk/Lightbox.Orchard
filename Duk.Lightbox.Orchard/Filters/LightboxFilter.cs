@@ -6,6 +6,7 @@ using Orchard.Mvc.Filters;
 using Orchard.UI.Resources;
 using System;
 using Duk.Lightbox.Orchard.Models;
+using System.Globalization;
 
 namespace Duk.Lightbox.Orchard.Filters
 {
@@ -28,8 +29,16 @@ namespace Duk.Lightbox.Orchard.Filters
                 return;
             }
 
+            var settings = _lightboxService.GetSettings();
+            var configuringLightbox = filterContext.Controller is AdminController;
+
+            if (!settings.Enabled && !configuringLightbox)
+            {
+                return;
+            }
+
             LightboxTheme currentTheme = null;
-            if (filterContext.Controller is AdminController)
+            if (configuringLightbox)
             {
                 var previewTheme = viewResult.Model as ThemeViewModel;
                 if (previewTheme != null && !String.IsNullOrWhiteSpace(previewTheme.CurrentTheme))
@@ -52,6 +61,10 @@ namespace Duk.Lightbox.Orchard.Filters
             _resourceManager.Require("script", "jQuery").AtHead();
             _resourceManager.Require("script", ResourceManifest.ColorBoxScriptId).AtFoot();
             _resourceManager.Require("script", ResourceManifest.UriJsId).AtFoot();
+            _resourceManager.RegisterHeadScript(String.Format(CultureInfo.InvariantCulture,
+                "<script>lightboxSettings = {{ containerQuery : \"{0}\", imageChildTagRequired: {1}, linkToImageRequired: {2}, imageFileExtensions: [\"{3}\"]  }};</script>;",
+                settings.ContainerSelector, settings.ImageChildTagRequired.ToString().ToLower(), settings.LinkToImageRequired.ToString().ToLower(), 
+                (settings.LinkToImageRequired ? String.Join("\", \"" , settings.ImageFileExtensions) : String.Empty)));
             _resourceManager.Require("script", ResourceManifest.LightboxLoaderScriptId).AtFoot();
         }
 

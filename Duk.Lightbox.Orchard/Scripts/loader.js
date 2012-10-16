@@ -1,25 +1,30 @@
 ﻿$(function () {
 
-    var imageExtensions = ["jpg", "jpeg", "png", "gif", "bmp", "tif", "tiff"];
+    //var lightboxsettings = {
+    //    containerquery : "#content",
+    //    imagechildtagrequired: false,
+    //    linktoimagerequired: true,
+    //    imagefileextensions: ["jpg", "jpeg", "png", "gif", "bmp", "tif", "tiff"]
+    //};
 
-    var containerQuery = "#content";
+    if (!lightboxSettings) {
+        return;
+    }
 
-    var processLinksWithImageInsideOnly = false;
-    var processLinksToImageOnly = true;
-
-    $(containerQuery).find("a").each(function(index, link) {
+    $(lightboxSettings.containerQuery).find("a").each(function (index, link) {
         var linkUrl = $(link).attr("href");
         if (!linkUrl || linkUrl.length < 1 || linkUrl[0] === "#") {
             return;
         }
         var processLink = true;
         var uri = new URI(linkUrl);
-        if (processLinksWithImageInsideOnly) {
+        if (lightboxSettings.imageChildTagRequired) {
             processLink &= $(link).children("img").length == 1;
         }
-        if (processLink && processLinksToImageOnly) {
+        if (processLink && lightboxSettings.linkToImageRequired) {
             var suffix = uri.suffix();
-            processLink &= suffix && suffix.length > 0 && $.inArray(suffix, imageExtensions) >= 0;
+            processLink &= suffix && suffix.length > 0 &&
+                $.inArray(suffix, lightboxSettings.imageFileExtensions) >= 0;
         }
         if (processLink) {
             $(link).colorbox();

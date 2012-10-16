@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Duk.Lightbox.Orchard.Records;
 using Orchard.Data;
+using System.IO;
 
 namespace Duk.Lightbox.Orchard.Services
 {
@@ -50,20 +51,40 @@ namespace Duk.Lightbox.Orchard.Services
 
         public void SetCurrentTheme(string theme)
         {
-            var settings = _settingsRepository.Table.SingleOrDefault();
-            if (settings == null)
-            {
-                settings = new SettingsRecord();
-                _settingsRepository.Create(settings);
-            }
+            var settings = GetSettingsToUpdate();
 
             settings.CurrentTheme = theme;
         }
 
-
         public LightboxSettings GetSettings()
         {
-            throw new NotImplementedException();
+            var settingsRecord = _settingsRepository.Table.SingleOrDefault();
+            if (settingsRecord == null)
+            {
+                return GetDefaultSettings();
+            }
+            var settings = new LightboxSettings 
+            {
+                Enabled = settingsRecord.Enabled,
+                ContainerSelector = settingsRecord.ContainerSelector,
+                ImageChildTagRequired = settingsRecord.ImageChildTagRequired,
+                LinkToImageRequired = settingsRecord.LinkToImageRequired,   
+                ImageFileExtensions = new List<string>(),
+                CurrentTheme = settingsRecord.CurrentTheme                
+            };
+            if (!String.IsNullOrWhiteSpace(settingsRecord.ImageFileExtensions))
+            {
+                var stringReader = new StringReader(settingsRecord.ImageFileExtensions);
+                string extension = null;
+                while ((extension = stringReader.ReadLine()) != null)
+                {
+                    if (!String.IsNullOrWhiteSpace(extension))
+                    {
+                        settings.ImageFileExtensions.Add(extension);
+                    }
+                }
+            }
+            return settings;
         }
 
         public LightboxSettings GetDefaultSettings()
@@ -74,14 +95,34 @@ namespace Duk.Lightbox.Orchard.Services
                            ContainerSelector = "#content",
                            ImageChildTagRequired = false,
                            LinkToImageRequired = true,
-                           ImageFileExtensions = null,
+                           ImageFileExtensions = new List<string> { "jpg", "jpeg", "png", "gif", "bmp", "tif", "tiff" },
                            CurrentTheme = null
                        };
         }
 
         public void SaveSettings(LightboxSettings settings)
         {
-            throw new NotImplementedException();
+            var settingsRecord = GetSettingsToUpdate();
+            settingsRecord.Enabled = settings.Enabled;
+            settingsRecord.ContainerSelector = settings.ContainerSelector;
+            settingsRecord.ImageChildTagRequired = settings.ImageChildTagRequired;
+            settingsRecord.LinkToImageRequired = settings.LinkToImageRequired;
+            settingsRecord.ImageFileExtensions = String.Join(Environment.NewLine, settings.ImageFileExtensions ?? new string[] { });
+            if (settings.CurrentTheme != null)
+            {
+                settingsRecord.CurrentTheme = settings.CurrentTheme;
+            }
+        }
+
+        private SettingsRecord GetSettingsToUpdate()
+        {
+            var settings = _settingsRepository.Table.SingleOrDefault();
+            if (settings == null)
+            {
+                settings = new SettingsRecord();
+                _settingsRepository.Create(settings);
+            }
+            return settings;
         }
     }
 }

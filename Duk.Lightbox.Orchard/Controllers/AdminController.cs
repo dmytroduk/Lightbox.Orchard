@@ -28,13 +28,35 @@ namespace Duk.Lightbox.Orchard.Controllers
 
         public ActionResult Index()
         {
-            return View();
+            var settings = _lightboxService.GetSettings();
+            var settingsViewModel = new SettingsViewModel { 
+                Enabled = settings.Enabled,
+                ContainerSelector = settings.ContainerSelector,
+                ImageChildTagRequired = settings.ImageChildTagRequired,
+                LinkToImageRequired = settings.LinkToImageRequired,
+                ImageFileExtensions = LightboxSettings.GetExtensionsAsString(settings.ImageFileExtensions)
+            };
+            return View(settingsViewModel);
         }
 
         [HttpPost]
-        public ActionResult Index(bool enable)
+        public ActionResult Index(SettingsViewModel settingsViewModel)
         {
-            return View();
+            // TODO: permissions, validation
+            if (!ModelState.IsValid)
+            {
+                return Index(settingsViewModel);
+            }
+            var settings = new LightboxSettings
+            {
+                Enabled = settingsViewModel.Enabled,
+                ContainerSelector = settingsViewModel.ContainerSelector,
+                ImageChildTagRequired = settingsViewModel.ImageChildTagRequired,
+                LinkToImageRequired = settingsViewModel.LinkToImageRequired,
+                ImageFileExtensions =  LightboxSettings.GetExtensionsAsList(settingsViewModel.ImageFileExtensions)
+            };
+            _lightboxService.SaveSettings(settings);
+            return Index();
         }
 
         public ActionResult Theme(string selectedTheme)
