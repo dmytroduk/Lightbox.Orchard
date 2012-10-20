@@ -65,8 +65,8 @@ namespace Duk.Lightbox.Orchard.Filters
             _resourceManager.RegisterHeadScript(String.Format(CultureInfo.InvariantCulture,
                 "<script>lightboxSettings = {{ containerQuery: \"{0}\", linkClasses: [{1}], linkRelAttributeValue: {2}, imageChildTagRequired: {3}, linkToImageRequired: {4}, imageFileExtensions: [{5}]  }};</script>;",
                 settings.ContainerSelector, 
-                (settings.LinkClasses.Any() ? "\"" + String.Join("\", \"" , settings.ImageFileExtensions) + "\"" : String.Empty),
-                !String.IsNullOrWhiteSpace(settings.LinkRelAttributeValue) ? settings.LinkRelAttributeValue : "null",
+                (settings.LinkClasses.Any() ? "\"" + String.Join("\", \"" , settings.LinkClasses) + "\"" : String.Empty),
+                !String.IsNullOrWhiteSpace(settings.LinkRelAttributeValue) ? "\"" + settings.LinkRelAttributeValue + "\"" : "null",
                 settings.ImageChildTagRequired.ToString().ToLower(), 
                 settings.LinkToImageRequired.ToString().ToLower(),
                 (settings.LinkToImageRequired ? "\"" + String.Join("\", \"", settings.ImageFileExtensions) + "\"" : String.Empty)));
