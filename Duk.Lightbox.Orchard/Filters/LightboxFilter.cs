@@ -72,6 +72,11 @@ namespace Duk.Lightbox.Orchard.Filters
                 (settings.LinkToImageRequired ? "\"" + String.Join("\", \"", settings.ImageFileExtensions) + "\"" : String.Empty)));
             
             _resourceManager.Require("script", ResourceManifest.LightboxLoaderScriptId).AtFoot();
+
+            if (!String.IsNullOrWhiteSpace(settings.CustomScript))
+            {
+                _resourceManager.RegisterFootScript(String.Format(CultureInfo.InvariantCulture, "<script>{0}</script>", settings.CustomScript));
+            }
         }
 
         public void OnResultExecuted(ResultExecutedContext filterContext)

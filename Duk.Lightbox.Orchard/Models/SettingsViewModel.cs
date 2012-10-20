@@ -21,5 +21,7 @@ namespace Duk.Lightbox.Orchard.Models
         public bool LinkToImageRequired { get; set; }
 
         public string ImageFileExtensions { get; set; }
+
+        public string CustomScript { get; set; }
     }
 }

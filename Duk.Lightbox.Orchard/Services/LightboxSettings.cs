@@ -20,6 +20,8 @@ namespace Duk.Lightbox.Orchard.Services
 
         public IList<string> ImageFileExtensions { get; set; }
 
+        public string CustomScript { get; set; }
+
         public string CurrentTheme { get; set; }
     }
 }

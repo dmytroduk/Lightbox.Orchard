@@ -72,7 +72,8 @@ namespace Duk.Lightbox.Orchard.Services
                 ImageChildTagRequired = settingsRecord.ImageChildTagRequired,
                 LinkToImageRequired = settingsRecord.LinkToImageRequired,   
                 ImageFileExtensions = ListUtils.StringToList(settingsRecord.ImageFileExtensions),
-                CurrentTheme = settingsRecord.CurrentTheme                
+                CustomScript = settingsRecord.CustomScript,
+                CurrentTheme = settingsRecord.CurrentTheme
             };
             return settings;
         }
@@ -84,11 +85,9 @@ namespace Duk.Lightbox.Orchard.Services
                            Enabled = true,
                            ContainerSelector = "#content",
                            LinkClasses = new List<string>(),
-                           LinkRelAttributeValue = null,
                            ImageChildTagRequired = false,
                            LinkToImageRequired = true,
-                           ImageFileExtensions = new List<string> { "jpg", "jpeg", "png", "gif", "bmp", "tif", "tiff" },
-                           CurrentTheme = null
+                           ImageFileExtensions = new List<string> { "jpg", "jpeg", "png", "gif", "bmp", "tif", "tiff" }
                        };
         }
 
@@ -102,7 +101,8 @@ namespace Duk.Lightbox.Orchard.Services
             settingsRecord.ImageChildTagRequired = settings.ImageChildTagRequired;
             settingsRecord.LinkToImageRequired = settings.LinkToImageRequired;
             settingsRecord.ImageFileExtensions = ListUtils.ListToString(settings.ImageFileExtensions);
-            if (settings.CurrentTheme != null)
+            settingsRecord.CustomScript = settings.CustomScript;
+            if (!String.IsNullOrWhiteSpace(settings.CurrentTheme))
             {
                 settingsRecord.CurrentTheme = settings.CurrentTheme;
             }

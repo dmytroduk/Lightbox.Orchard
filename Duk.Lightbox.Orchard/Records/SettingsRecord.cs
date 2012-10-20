@@ -18,6 +18,8 @@
 
         public virtual string ImageFileExtensions { get; set; }
 
+        public virtual string CustomScript { get; set; }
+
         public virtual string CurrentTheme { get; set; }
     }
 }

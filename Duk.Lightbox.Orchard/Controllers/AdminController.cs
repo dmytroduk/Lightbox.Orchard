@@ -36,7 +36,8 @@ namespace Duk.Lightbox.Orchard.Controllers
                 LinkRelAttributeValue = settings.LinkRelAttributeValue,
                 ImageChildTagRequired = settings.ImageChildTagRequired,
                 LinkToImageRequired = settings.LinkToImageRequired,
-                ImageFileExtensions = ListUtils.ListToString(settings.ImageFileExtensions)
+                ImageFileExtensions = ListUtils.ListToString(settings.ImageFileExtensions),
+                CustomScript = settings.CustomScript
             };
             return View(settingsViewModel);
         }
@@ -57,7 +58,8 @@ namespace Duk.Lightbox.Orchard.Controllers
                 LinkRelAttributeValue = settingsViewModel.LinkRelAttributeValue,
                 ImageChildTagRequired = settingsViewModel.ImageChildTagRequired,
                 LinkToImageRequired = settingsViewModel.LinkToImageRequired,
-                ImageFileExtensions = ListUtils.StringToList(settingsViewModel.ImageFileExtensions)
+                ImageFileExtensions = ListUtils.StringToList(settingsViewModel.ImageFileExtensions),
+                CustomScript = settingsViewModel.CustomScript
             };
             _lightboxService.SaveSettings(settings);
             return Index();

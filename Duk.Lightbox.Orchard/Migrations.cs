@@ -23,8 +23,10 @@ namespace Duk.Lightbox.Orchard
                     linkToImageRequired => linkToImageRequired.WithDefault(true))
                 .Column<string>("ImageFileExtensions",
                     imageFileExtensions => imageFileExtensions.WithLength(1024))
+                .Column<string>("CustomScript",
+                    customScript => customScript.Unlimited())
                 .Column<string>("CurrentTheme",
-                    theme => theme.WithLength(1024))
+                    theme => theme.WithLength(1024))                
                 );
             return 1;
         }

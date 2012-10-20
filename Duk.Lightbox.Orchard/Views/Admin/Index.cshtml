@@ -18,7 +18,7 @@
         </div>
     </fieldset>
     <fieldset>
-        <label for="containerSelector">@T("Link must has one of the following classes")</label>
+        <label for="linkClasses">@T("Link must has one of the following classes")</label>
         @Html.TextBoxFor(m => m.LinkClasses, new { @class = "textMedium" })
         <div class="hint"><p>CSS class names separated by whitespaces or commas. Example:</p>
             <ul>
@@ -27,7 +27,7 @@
         </div>
     </fieldset>
     <fieldset>
-        <label for="containerSelector">@T("Link must has rel attribute with following value")</label>
+        <label for="linkRelAttributeValue">@T("Link must has rel attribute with following value")</label>
         @Html.TextBoxFor(m => m.LinkRelAttributeValue, new { @class = "textMedium" })
         <div class="hint"><p>Example:</p>
             <ul>
@@ -54,6 +54,13 @@
         <label for="imageFileExtensions">@T("Image file extensions")</label>
         @Html.TextBoxFor(m => m.ImageFileExtensions, new { @class = "textMedium" })
         <div class="hint"><p>The list of image file extensions that lightbox should be enabled for.</p></div>
+    </fieldset>
+    <fieldset>
+        <label for="imageFileExtensions">@T("Custom script that should be injected on the pages.")</label>
+        @Html.TextAreaFor(m => m.CustomScript)
+        <div class="hint"><p>You can use jQuery, colorbox and URI.js libraries. lightboxSettings object provides current settings. For example:</p>
+            <code>$("a[rel='gallery']").colorbox();</code>
+        </div>
     </fieldset>
     
     @Html.AntiForgeryTokenOrchard()
