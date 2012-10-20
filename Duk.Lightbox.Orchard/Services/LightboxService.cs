@@ -83,6 +83,8 @@ namespace Duk.Lightbox.Orchard.Services
                        {
                            Enabled = true,
                            ContainerSelector = "#content",
+                           LinkClasses = new List<string>(),
+                           LinkRelAttributeValue = null,
                            ImageChildTagRequired = false,
                            LinkToImageRequired = true,
                            ImageFileExtensions = new List<string> { "jpg", "jpeg", "png", "gif", "bmp", "tif", "tiff" },
