@@ -5,17 +5,21 @@ namespace Duk.Lightbox.Orchard.Models
     public class SettingsViewModel
     {
         [Required]
-        public virtual bool Enabled { get; set; }
+        public bool Enabled { get; set; }
 
         [Required]
-        public virtual string ContainerSelector { get; set; }
+        public string ContainerSelector { get; set; }
+
+        public string LinkClasses { get; set; }
+
+        public string LinkRelAttributeValue { get; set; }
 
         [Required]
-        public virtual bool ImageChildTagRequired { get; set; }
+        public bool ImageChildTagRequired { get; set; }
 
         [Required]
-        public virtual bool LinkToImageRequired { get; set; }
+        public bool LinkToImageRequired { get; set; }
 
-        public virtual string ImageFileExtensions { get; set; }
+        public string ImageFileExtensions { get; set; }
     }
 }

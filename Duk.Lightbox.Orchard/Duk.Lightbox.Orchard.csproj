@@ -127,6 +127,7 @@
     <Compile Include="Services\LightboxService.cs" />
     <Compile Include="Services\LightboxSettings.cs" />
     <Compile Include="Services\LightboxTheme.cs" />
+    <Compile Include="ListUtils.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\Web.config" />

@@ -8,6 +8,10 @@
 
         public virtual string ContainerSelector { get; set; }
 
+        public virtual string LinkClasses { get; set; }
+        
+        public virtual string LinkRelAttributeValue { get; set; }
+
         public virtual bool ImageChildTagRequired { get; set; }
 
         public virtual bool LinkToImageRequired { get; set; }

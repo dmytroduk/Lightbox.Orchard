@@ -10,6 +10,10 @@ namespace Duk.Lightbox.Orchard.Services
 
         public string ContainerSelector { get; set; }
 
+        public IList<string> LinkClasses { get; set; }
+
+        public string LinkRelAttributeValue { get; set; }
+
         public bool ImageChildTagRequired { get; set; }
 
         public bool LinkToImageRequired { get; set; }
@@ -17,28 +21,5 @@ namespace Duk.Lightbox.Orchard.Services
         public IList<string> ImageFileExtensions { get; set; }
 
         public string CurrentTheme { get; set; }
-
-        public static string GetExtensionsAsString(IList<string> extensions)
-        {
-            return String.Join(Environment.NewLine, extensions ?? new string[] { });
-        }
-
-        public static IList<string> GetExtensionsAsList(string extensions)
-        {
-            var list = new List<string>();
-            if (!String.IsNullOrWhiteSpace(extensions))
-            {
-                var stringReader = new StringReader(extensions);
-                string extension = null;
-                while ((extension = stringReader.ReadLine()) != null)
-                {
-                    if (!String.IsNullOrWhiteSpace(extension))
-                    {
-                        list.Add(extension);
-                    }
-                }
-            }
-            return list;
-        }
     }
 }

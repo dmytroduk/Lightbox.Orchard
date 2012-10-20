@@ -18,6 +18,24 @@
         </div>
     </fieldset>
     <fieldset>
+        <label for="containerSelector">@T("Link must has one of the following classes")</label>
+        @Html.TextBoxFor(m => m.LinkClasses, new { @class = "textMedium" })
+        <div class="hint"><p>CSS class names separated by whitespaces or commas. Example:</p>
+            <ul>
+                <li><code>lightbox gallery</code> enales lightbox for links that have lightbox or gallery CSS classes.</li>
+            </ul>
+        </div>
+    </fieldset>
+    <fieldset>
+        <label for="containerSelector">@T("Link must has rel attribute with following value")</label>
+        @Html.TextBoxFor(m => m.LinkRelAttributeValue, new { @class = "textMedium" })
+        <div class="hint"><p>Example:</p>
+            <ul>
+                <li><code>gallery</code> enales lightbox for links that have rel="gallery" attribute.</li>
+            </ul>
+        </div>
+    </fieldset>
+    <fieldset>
         <label for="imageChildTagRequired">@T("Link must have child image tag")</label>
         @Html.CheckBoxFor(m => m.ImageChildTagRequired)
         <div class="hint"><p>Enables Lightbox only for those links that have image child. If this oprion is set:</p>
@@ -28,13 +46,13 @@
         </div>
     </fieldset>
     <fieldset>
-        <label for="linkToImageRequired">@T("Link must refer image")</label>
+        <label for="linkToImageRequired">@T("Link must refer file with image extension")</label>
         @Html.CheckBoxFor(m => m.LinkToImageRequired)
         <div class="hint"><p>Enables Lightbox only links that refers graphical files with defined extensions.</p></div>
     </fieldset>
     <fieldset>
         <label for="imageFileExtensions">@T("Image file extensions")</label>
-        @Html.TextAreaFor(m => m.ImageFileExtensions, 8, 10, null)
+        @Html.TextBoxFor(m => m.ImageFileExtensions, new { @class = "textMedium" })
         <div class="hint"><p>The list of image file extensions that lightbox should be enabled for.</p></div>
     </fieldset>
     

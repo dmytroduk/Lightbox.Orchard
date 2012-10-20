@@ -1,12 +1,5 @@
 ﻿$(function () {
 
-    //var lightboxsettings = {
-    //    containerquery : "#content",
-    //    imagechildtagrequired: false,
-    //    linktoimagerequired: true,
-    //    imagefileextensions: ["jpg", "jpeg", "png", "gif", "bmp", "tif", "tiff"]
-    //};
-
     if (!lightboxSettings) {
         return;
     }
@@ -15,6 +8,11 @@
         var linkUrl = $(link).attr("href");
         if (!linkUrl || linkUrl.length < 1 || linkUrl[0] === "#") {
             return;
+        }
+        if (lightboxSettings.linkClasses && lightboxSettings.linkClasses.length > 0) {
+            if (!link.is("." + lightboxSettings.linkClasses.join(", ."))) {
+                return;
+            }
         }
         var processLink = true;
         var uri = new URI(linkUrl);

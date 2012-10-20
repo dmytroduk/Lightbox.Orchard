@@ -32,9 +32,11 @@ namespace Duk.Lightbox.Orchard.Controllers
             var settingsViewModel = new SettingsViewModel { 
                 Enabled = settings.Enabled,
                 ContainerSelector = settings.ContainerSelector,
+                LinkClasses = ListUtils.ListToString(settings.LinkClasses),
+                LinkRelAttributeValue = settings.LinkRelAttributeValue,
                 ImageChildTagRequired = settings.ImageChildTagRequired,
                 LinkToImageRequired = settings.LinkToImageRequired,
-                ImageFileExtensions = LightboxSettings.GetExtensionsAsString(settings.ImageFileExtensions)
+                ImageFileExtensions = ListUtils.ListToString(settings.ImageFileExtensions)
             };
             return View(settingsViewModel);
         }
@@ -51,9 +53,11 @@ namespace Duk.Lightbox.Orchard.Controllers
             {
                 Enabled = settingsViewModel.Enabled,
                 ContainerSelector = settingsViewModel.ContainerSelector,
+                LinkClasses = ListUtils.StringToList(settingsViewModel.LinkClasses),
+                LinkRelAttributeValue = settingsViewModel.LinkRelAttributeValue,
                 ImageChildTagRequired = settingsViewModel.ImageChildTagRequired,
                 LinkToImageRequired = settingsViewModel.LinkToImageRequired,
-                ImageFileExtensions =  LightboxSettings.GetExtensionsAsList(settingsViewModel.ImageFileExtensions)
+                ImageFileExtensions = ListUtils.StringToList(settingsViewModel.ImageFileExtensions)
             };
             _lightboxService.SaveSettings(settings);
             return Index();

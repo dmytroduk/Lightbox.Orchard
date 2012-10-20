@@ -61,10 +61,16 @@ namespace Duk.Lightbox.Orchard.Filters
             _resourceManager.Require("script", "jQuery").AtHead();
             _resourceManager.Require("script", ResourceManifest.ColorBoxScriptId).AtFoot();
             _resourceManager.Require("script", ResourceManifest.UriJsId).AtFoot();
+
             _resourceManager.RegisterHeadScript(String.Format(CultureInfo.InvariantCulture,
-                "<script>lightboxSettings = {{ containerQuery : \"{0}\", imageChildTagRequired: {1}, linkToImageRequired: {2}, imageFileExtensions: [\"{3}\"]  }};</script>;",
-                settings.ContainerSelector, settings.ImageChildTagRequired.ToString().ToLower(), settings.LinkToImageRequired.ToString().ToLower(), 
-                (settings.LinkToImageRequired ? String.Join("\", \"" , settings.ImageFileExtensions) : String.Empty)));
+                "<script>lightboxSettings = {{ containerQuery: \"{0}\", linkClasses: [{1}], linkRelAttributeValue: {2}, imageChildTagRequired: {3}, linkToImageRequired: {4}, imageFileExtensions: [{5}]  }};</script>;",
+                settings.ContainerSelector, 
+                (settings.LinkClasses.Any() ? "\"" + String.Join("\", \"" , settings.ImageFileExtensions) + "\"" : String.Empty),
+                !String.IsNullOrWhiteSpace(settings.LinkRelAttributeValue) ? settings.LinkRelAttributeValue : "null",
+                settings.ImageChildTagRequired.ToString().ToLower(), 
+                settings.LinkToImageRequired.ToString().ToLower(),
+                (settings.LinkToImageRequired ? "\"" + String.Join("\", \"", settings.ImageFileExtensions) + "\"" : String.Empty)));
+            
             _resourceManager.Require("script", ResourceManifest.LightboxLoaderScriptId).AtFoot();
         }
 

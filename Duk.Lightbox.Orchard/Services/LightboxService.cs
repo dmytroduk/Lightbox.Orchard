@@ -67,23 +67,13 @@ namespace Duk.Lightbox.Orchard.Services
             {
                 Enabled = settingsRecord.Enabled,
                 ContainerSelector = settingsRecord.ContainerSelector,
+                LinkClasses = ListUtils.StringToList(settingsRecord.LinkClasses),
+                LinkRelAttributeValue = settingsRecord.LinkRelAttributeValue,
                 ImageChildTagRequired = settingsRecord.ImageChildTagRequired,
                 LinkToImageRequired = settingsRecord.LinkToImageRequired,   
-                ImageFileExtensions = new List<string>(),
+                ImageFileExtensions = ListUtils.StringToList(settingsRecord.ImageFileExtensions),
                 CurrentTheme = settingsRecord.CurrentTheme                
             };
-            if (!String.IsNullOrWhiteSpace(settingsRecord.ImageFileExtensions))
-            {
-                var stringReader = new StringReader(settingsRecord.ImageFileExtensions);
-                string extension = null;
-                while ((extension = stringReader.ReadLine()) != null)
-                {
-                    if (!String.IsNullOrWhiteSpace(extension))
-                    {
-                        settings.ImageFileExtensions.Add(extension);
-                    }
-                }
-            }
             return settings;
         }
 
@@ -105,9 +95,11 @@ namespace Duk.Lightbox.Orchard.Services
             var settingsRecord = GetSettingsToUpdate();
             settingsRecord.Enabled = settings.Enabled;
             settingsRecord.ContainerSelector = settings.ContainerSelector;
+            settingsRecord.LinkClasses = ListUtils.ListToString(settings.LinkClasses);
+            settingsRecord.LinkRelAttributeValue = settings.LinkRelAttributeValue;
             settingsRecord.ImageChildTagRequired = settings.ImageChildTagRequired;
             settingsRecord.LinkToImageRequired = settings.LinkToImageRequired;
-            settingsRecord.ImageFileExtensions = String.Join(Environment.NewLine, settings.ImageFileExtensions ?? new string[] { });
+            settingsRecord.ImageFileExtensions = ListUtils.ListToString(settings.ImageFileExtensions);
             if (settings.CurrentTheme != null)
             {
                 settingsRecord.CurrentTheme = settings.CurrentTheme;
