@@ -48,7 +48,7 @@ namespace Duk.Lightbox.Orchard.Controllers
             // TODO: permissions, validation
             if (!ModelState.IsValid)
             {
-                return Index(settingsViewModel);
+                return Index();
             }
             var settings = new LightboxSettings
             {

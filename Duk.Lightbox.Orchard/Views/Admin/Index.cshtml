@@ -1,7 +1,7 @@
 ﻿@model Duk.Lightbox.Orchard.Models.SettingsViewModel
 @using (Html.BeginForm("Index", "Admin", FormMethod.Post, new { area = "Duk.Lightbox.Orchard", id = "settingsForm" }))
 {
-        @Html.ValidationSummary() 
+        @Html.ValidationSummary(true, "Unable to save invalid configuration. Please verify settings below.")
     <fieldset>
         <label for="enabled">@T("Enable Lightbox")</label>
         @Html.CheckBoxFor(m => m.Enabled)
@@ -9,6 +9,7 @@
     <fieldset>
         <label for="containerSelector">@T("Container selector")</label>
         @Html.TextBoxFor(m => m.ContainerSelector, new { @class = "textMedium" })
+        @Html.ValidationMessageFor(m => m.ContainerSelector)
         <div class="hint"><p>jQuery selector to indentify containers where Lightbox should be enabled. Examples:</p>
             <ul>
                 <li><code>#content</code> means that Lightbox should be enabled for links inside element that has ID = content.</li>
@@ -20,6 +21,7 @@
     <fieldset>
         <label for="linkClasses">@T("Link must has one of the following classes")</label>
         @Html.TextBoxFor(m => m.LinkClasses, new { @class = "textMedium" })
+        @Html.ValidationMessageFor(m => m.LinkClasses)
         <div class="hint"><p>CSS class names separated by whitespaces or commas. Example:</p>
             <ul>
                 <li><code>lightbox gallery</code> enales lightbox for links that have lightbox or gallery CSS classes.</li>
@@ -29,6 +31,7 @@
     <fieldset>
         <label for="linkRelAttributeValue">@T("Link must has rel attribute with following value")</label>
         @Html.TextBoxFor(m => m.LinkRelAttributeValue, new { @class = "textMedium" })
+        @Html.ValidationMessageFor(m => m.LinkRelAttributeValue)
         <div class="hint"><p>Example:</p>
             <ul>
                 <li><code>gallery</code> enales lightbox for links that have rel="gallery" attribute.</li>
@@ -37,7 +40,7 @@
     </fieldset>
     <fieldset>
         <label for="imageChildTagRequired">@T("Link must have child image tag")</label>
-        @Html.CheckBoxFor(m => m.ImageChildTagRequired)
+        @Html.CheckBoxFor(m => m.ImageChildTagRequired)        
         <div class="hint"><p>Enables Lightbox only for those links that have image child. If this oprion is set:</p>
             <ul>
                 <li>Lightbox is enabled for links like this: <code>&lt;a href=&quot;image.png&quot;&gt;&lt;img src=&quot;image_thumb.png&quot; /&gt;&lt;/a&gt;</code></li>
@@ -53,6 +56,7 @@
     <fieldset>
         <label for="imageFileExtensions">@T("Image file extensions")</label>
         @Html.TextBoxFor(m => m.ImageFileExtensions, new { @class = "textMedium" })
+        @Html.ValidationMessageFor(m => m.ImageFileExtensions)
         <div class="hint"><p>The list of image file extensions that lightbox should be enabled for.</p></div>
     </fieldset>
     <fieldset>
