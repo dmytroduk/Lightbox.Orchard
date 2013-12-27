@@ -2,8 +2,8 @@ Name: Duk.Lightbox.Orchard
 AntiForgery: enabled
 Author: Dmytro Duk
 Website: http://dmytroduk.com/projects/lightbox.orchard
-Version: 1.0
-OrchardVersion: 1.0
+Version: 1.1
+OrchardVersion: 1.7
 Description: Enables lightbox for images on site pages.
 Features:
     Duk.Lightbox.Orchard:

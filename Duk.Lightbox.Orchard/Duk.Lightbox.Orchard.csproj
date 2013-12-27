@@ -67,20 +67,18 @@
   <ItemGroup>
     <Content Include="Content\TestImage.jpg" />
     <Content Include="Content\TestImage_thumb.jpg" />
-    <Content Include="Scripts\colorbox\jquery.colorbox-min.js" />
-    <Content Include="Scripts\colorbox\jquery.colorbox.js" />
     <Content Include="Scripts\_references.js" />
     <Content Include="Scripts\loader.js" />
     <Content Include="Scripts\uri\URI.min.js" />
-    <Content Include="Styles\themes\DarkBottom\colorbox.css" />
+    <Content Include="Styles\themes\DarkBottom\colorboxstyle.css" />
     <Content Include="Styles\themes\DarkBottom\images\border.png" />
     <Content Include="Styles\themes\DarkBottom\images\controls.png" />
     <Content Include="Styles\themes\DarkBottom\images\loading.gif" />
     <Content Include="Styles\themes\DarkBottom\images\loading_background.png" />
-    <Content Include="Styles\themes\DarkInline\colorbox.css" />
+    <Content Include="Styles\themes\DarkInline\colorboxstyle.css" />
     <Content Include="Styles\themes\DarkInline\images\controls.png" />
     <Content Include="Styles\themes\DarkInline\images\loading.gif" />
-    <Content Include="Styles\themes\LightBottom\colorbox.css" />
+    <Content Include="Styles\themes\LightBottom\colorboxstyle.css" />
     <Content Include="Styles\themes\LightBottom\images\border1.png" />
     <Content Include="Styles\themes\LightBottom\images\border2.png" />
     <Content Include="Styles\themes\LightBottom\images\controls.png" />
@@ -93,7 +91,7 @@
     <Content Include="Styles\themes\LightBottom\images\ie6\borderTopLeft.png" />
     <Content Include="Styles\themes\LightBottom\images\ie6\borderTopRight.png" />
     <Content Include="Styles\themes\LightBottom\images\loading.gif" />
-    <Content Include="Styles\themes\LightTop\colorbox.css" />
+    <Content Include="Styles\themes\LightTop\colorboxstyle.css" />
     <Content Include="Styles\themes\LightTop\images\controls.png" />
     <Content Include="Styles\themes\LightTop\images\loading.gif" />
     <Content Include="Web.config" />

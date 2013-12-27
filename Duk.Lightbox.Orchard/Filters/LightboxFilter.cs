@@ -53,13 +53,8 @@ namespace Duk.Lightbox.Orchard.Filters
                 currentTheme = _lightboxService.GetCurrentTheme();            
             }
 
-            if (currentTheme != null)
-            {
-                currentTheme.CssResources.Keys.ToList().ForEach(name => _resourceManager.Require("stylesheet", name).AtHead());
-            }            
-
             _resourceManager.Require("script", "jQuery").AtHead();
-            _resourceManager.Require("script", ResourceManifest.ColorBoxScriptId).AtFoot();
+            _resourceManager.Require("script", "jQueryColorBox").AtFoot();
             _resourceManager.Require("script", ResourceManifest.UriJsId).AtFoot();
 
             _resourceManager.RegisterHeadScript(String.Format(CultureInfo.InvariantCulture,
@@ -77,6 +72,11 @@ namespace Duk.Lightbox.Orchard.Filters
             {
                 _resourceManager.RegisterFootScript(String.Format(CultureInfo.InvariantCulture, "<script>{0}</script>", settings.CustomScript));
             }
+
+            if (currentTheme != null)
+            {
+                currentTheme.CssResources.Keys.ToList().ForEach(name => _resourceManager.Require("stylesheet", name).AtHead());
+            }            
         }
 
         public void OnResultExecuted(ResultExecutedContext filterContext)
